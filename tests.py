@@ -51,9 +51,9 @@ class TestBooksCollector:
     def test_get_books_for_children(self):
         collector = BooksCollector()
         collector.add_new_book('Детская книга')
-        collector.set_book_genre('Детская книга', 'Мультфильмы')  # нет возрастного рейтинга
+        collector.set_book_genre('Детская книга', 'Мультфильмы')  
         collector.add_new_book('Страшилка')
-        collector.set_book_genre('Страшилка', 'Ужасы')  # есть возрастной рейтинг
+        collector.set_book_genre('Страшилка', 'Ужасы')  
 
         children_books = collector.get_books_for_children()
         assert 'Детская книга' in children_books
@@ -63,7 +63,7 @@ class TestBooksCollector:
         collector = BooksCollector()
         collector.add_new_book('Фаворит')
         collector.add_book_in_favorites('Фаворит')
-        collector.add_book_in_favorites('Фаворит')  # проверяем, что дубли не добавляются
+        collector.add_book_in_favorites('Фаворит')  
 
         favorites = collector.get_list_of_favorites_books()
         assert favorites.count('Фаворит') == 1
