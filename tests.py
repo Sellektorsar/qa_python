@@ -6,14 +6,12 @@ class TestBooksCollector:
     @pytest.mark.parametrize("book_name", [
         "Маленький принц",
         "Война и мир",
-        "А" * 40  # максимально допустимая длина
+        "А" * 40  
     ])
     def test_add_new_book(self, book_name):
         collector = BooksCollector()
         collector.add_new_book(book_name)
-        # Проверяем, что книга появилась в словаре
         assert book_name in collector.get_books_genre()
-        # Проверяем, что у новой книги пустой жанр
         assert collector.get_book_genre(book_name) == ''
 
     @pytest.mark.parametrize("genre", ['Фантастика', 'Ужасы', 'Мультфильмы'])
@@ -21,20 +19,15 @@ class TestBooksCollector:
         collector = BooksCollector()
         collector.add_new_book("Тестовая книга")
         collector.set_book_genre("Тестовая книга", genre)
-        # Вот assert один на каждый параметр
         assert collector.get_book_genre("Тестовая книга") == genre
 
     def test_get_book_genre_for_nonexistent_book(self):
         collector = BooksCollector()
-        # Для уверенности добавим книгу с жанром
         collector.add_new_book("Существующая книга")
         collector.set_book_genre("Существующая книга", "Фантастика")
 
-        # Теперь запросим жанр несуществующей книги
         genre = collector.get_book_genre('Неизвестная книга')
-        assert genre is None
-
-        # Убедимся, что жанр существующей книги по-прежнему корректен
+        assert genre is None       
         assert collector.get_book_genre("Существующая книга") == "Фантастика"
 
     def test_get_books_with_specific_genre(self):
@@ -45,7 +38,6 @@ class TestBooksCollector:
         collector.set_book_genre("Комедия 2", "Комедии")
 
         books = collector.get_books_with_specific_genre("Комедии")
-        # Проверяем, что обе книги возвращаются в списке
         assert sorted(books) == ["Комедия 1", "Комедия 2"]
 
     def test_get_books_genre(self):
@@ -53,7 +45,6 @@ class TestBooksCollector:
         collector.add_new_book("Книга1")
         collector.add_new_book("Книга2")
         genres = collector.get_books_genre()
-        # Проверяем, что 2 книги присутствуют и у них пустые жанры (проверяем первый элемент из класса эквивалентности)
         assert "Книга1" in genres
         assert genres["Книга1"] == ''
 
@@ -84,7 +75,6 @@ class TestBooksCollector:
         collector.delete_book_from_favorites('Удаляемая книга')
         assert 'Удаляемая книга' not in collector.get_list_of_favorites_books()
 
-        # Проверяем удаление книги, которой нет в избранном — не должно вызывать ошибку
         collector.delete_book_from_favorites('Удаляемая книга')
 
     def test_get_list_of_favorites_books(self):
